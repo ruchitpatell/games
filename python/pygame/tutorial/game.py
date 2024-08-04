@@ -30,6 +30,7 @@ class Game:
         }
 
         self.player = PhysicsEntity(self, 'player', (50, 50), (8, 15))
+        self.scroll = [0, 0]
 
         self.tilemap = Tilemap(self, tile_size=16)
 
@@ -38,10 +39,15 @@ class Game:
             # clear screen (sky color)
             self.display.fill((14, 219, 248))
 
-            self.tilemap.render(self.display)
+            # camera positioned such that player is in center and smooth scroll
+            self.scroll[0] += (self.player.rectangle().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
+            self.scroll[1] += (self.player.rectangle().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
+            render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
+
+            self.tilemap.render(self.display, offset=render_scroll)
 
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
-            self.player.render(self.display)
+            self.player.render(self.display, offset=render_scroll)
 
             self.handle_event()
             
