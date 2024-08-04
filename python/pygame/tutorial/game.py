@@ -19,20 +19,25 @@ class Game:
         self.img_pos = [160, 260]
         self.movement = [False, False]
 
-        # self.collision_area = pygame.Rect(50, 50, 300, 50)
+        self.collision_area = pygame.Rect(50, 50, 300, 50)  # x, y, width, height
 
     def run(self):
         while True:
             # clear screen (sky color)
             self.screen.fill((14, 219, 248))
 
+            # A rectangle following our image, detect collision
+            img_r = pygame.Rect(*self.img_pos, *self.img.get_size())
+            if img_r.colliderect(self.collision_area):
+                pygame.draw.rect(self.screen, (0, 100, 255), self.collision_area)
+            else:
+                pygame.draw.rect(self.screen, (0, 50, 155), self.collision_area)
+
             self.img_pos[1] += (self.movement[1] - self.movement[0])*5  # boolean math 4 up or down
             self.img.set_colorkey((0, 0, 0))                            # set black as transparent
             self.screen.blit(self.img, self.img_pos)                    # top-left (0, 0)
-
-
-            # img_r = pygame.Rect(self.img_pos[0], self.img_pos[1], self.img.get_width(), self.img.get_height())
-
+                
+            # self.screen.blit(img_r, img_r.get)
 
             # event handling
             for event in pygame.event.get():
