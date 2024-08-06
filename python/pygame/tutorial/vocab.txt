@@ -1,0 +1,8 @@
+Surface
+    - An image in memory
+
+Blit
+    - Mem copy of a section onto a surface
+
+Layering
+    - Purely based on the render order
