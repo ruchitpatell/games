@@ -1,5 +1,4 @@
 import pygame
-import random
 import sys
 
 from constants import ResolutionConstant, ResolutionLookup
