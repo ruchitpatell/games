@@ -2,7 +2,7 @@ import argparse
 import pygame
 import sys
 
-from constants import ArgumentDict, ColorConstant, DisplayConstant, FUNC, ARGS, FunctionArgumentDict, RenderConstant
+from constants import ArgumentDict, ColorConstant, DisplayConstant, FUNC, ARGS, FunctionArgumentDict, RenderConstant, ShapeParamConstant
 
 class Game:
     def __init__(self, shapes=None):
@@ -30,7 +30,11 @@ class Game:
                 self.running = False
 
     def __demo(self, shape):
-        FunctionArgumentDict[shape][FUNC](self.screen, FunctionArgumentDict[shape][ARGS])
+        try:
+            FunctionArgumentDict[shape][FUNC](self.screen, FunctionArgumentDict[shape][ARGS][:ShapeParamConstant.MAX_OBJECTS.value])
+        except Exception as e:
+            print('Exception: ', e)
+            self.running = False
 
     def demo_shapes(self):
         if not self.shapes:
